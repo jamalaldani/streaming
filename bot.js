@@ -1,35 +1,34 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
+var prefix = "1";
+
 client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag}!`);
+  console.log(`Logged in as ${client.user.tag}!`);  
 });
 
+client.on('ready', async() => {
+var server = "518721528091901973"; // ايدي السررفر
+var channel = "518722260530495489";//ايدي الروم
+    setInterval(()=>{
+    client.guilds.get(server).channels.get(channel).send('**Dream , Dream , Dream , Dream , Dream , Dream , Dream , Dream , Dream , Dream , Dream , Dream , Dream , Dream , Dream , Dream , Dream , Dream , **')
+    },305);
+})
 
-const developers = ["461059496861630465"]
-const adminprefix = "^";
 client.on('message', message => {
-    var argresult = message.content.split(` `).slice(1).join(' ');
-      if (!developers.includes(message.author.id)) return;
-      
-  if (message.content.startsWith(adminprefix + 'ply')) {
-    client.user.setGame(argresult);
-      message.channel.send(`**Status You   ${argresult}**`)
-  } else 
-  if (message.content.startsWith(adminprefix + 'wat')) {
-  client.user.setActivity(argresult, {type:'WATCHING'});
-      message.channel.send(`**Status You   ${argresult}**`)
-  } else 
-  if (message.content.startsWith(adminprefix + 'lis')) {
-  client.user.setActivity(argresult , {type:'LISTENING'});
-      message.channel.send(`**Status You  ${argresult}**`)
-  } else 
-  if (message.content.startsWith(adminprefix + 'st')) {
-    client.user.setGame(argresult, "https://www.twitch.tv/M3roof");
-      message.channel.send(`**Status You ${argresult} **`)
-}
-});
+  if (message.author.bot) return;
+  if (!message.content.startsWith(prefix)) return;
 
+  let command = message.content.split(" ")[0];
+  command = command.slice(prefix.length);
 
+  let args = message.content.split(" ").slice(1);
 
+  if (command == "say") {
+if(!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send('?|**\`ADMINISTRATOR\`ليس لديك صلاحيات`**');
+   message.channel.sendMessage(args.join("  "))
+   message.delete()
+  }
+ });
 
-client.login("BOT_TOKEN");
+ 
+client.login(process.env.BOT_TOKEN);
